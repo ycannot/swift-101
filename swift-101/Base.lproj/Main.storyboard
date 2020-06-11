@@ -22,7 +22,10 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="Alışveriş Listesi" id="V2o-1f-srl">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="bRQ-YN-Xth"/>
+                                        <rightBarButtonItems>
+                                            <barButtonItem systemItem="edit" id="Rof-y9-z03"/>
+                                            <barButtonItem systemItem="add" id="bRQ-YN-Xth"/>
+                                        </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
                             </navigationBar>

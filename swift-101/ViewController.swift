@@ -8,11 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShoppingListDelegate {
+    
+    
     var products = [Product]()
     let cellId = "ProductTableViewCell"
+    // MARK: Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var totalPrice: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -21,11 +25,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         
+        var sum:Double = 0
         for _ in 1...8{
             let element = Product(name: "palanga", price: 19.99, amount: 2)!
             products.append(element)
+            sum += (Double(element.amount) * element.price)
             
         }
+        totalPrice.text = String(sum)
         tableView.reloadData()
     }
     
@@ -40,6 +47,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.productName.text = item.name
         cell.amountTF.text = String(item.amount)
         cell.priceTF.text = String(item.price)
+        cell.index = indexPath.row
+        cell.delegate = self
         return cell
     }
     
@@ -47,5 +56,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 1
     }
     
+    func recalculate(rowIndex:Int, amount:Int, price:Double) {
+        //tableView.reloadData()
+        //print("table has been reloaded")
+        products[rowIndex].amount = amount
+        products[rowIndex].price = price
+        var sum:Double = 0
+        for i in products{
+            sum += (Double(i.amount) * i.price)
+        }
+        totalPrice.text = String(sum)
+    }
+    
+}
+
+protocol ShoppingListDelegate {
+    func recalculate(rowIndex:Int, amount:Int, price:Double)
 }
 
