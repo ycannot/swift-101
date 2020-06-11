@@ -16,6 +16,12 @@ class ProductTableViewCell: UITableViewCell {
     
     var delegate:ShoppingListDelegate?
     var index:Int?
+    @IBAction func editDidChangeAction(_ sender: Any) {
+        if let currentIndex = index{
+            self.delegate?.recalculate(rowIndex:currentIndex, amount:Int(self.amountTF.text ?? "") ?? 0, price:Double(self.priceTF.text ?? "") ?? 0)
+        }
+    }
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -47,4 +53,8 @@ extension ProductTableViewCell: UITextFieldDelegate{
         }
         return true
     }
+}
+
+protocol EditClickedDelegate{
+    func onClick()
 }

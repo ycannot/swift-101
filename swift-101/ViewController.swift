@@ -32,7 +32,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             sum += (Double(element.amount) * element.price)
             
         }
-        totalPrice.text = String(sum)
+        totalPrice.text = String(format: "%.2f", sum)
         tableView.reloadData()
     }
     
@@ -65,7 +65,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         for i in products{
             sum += (Double(i.amount) * i.price)
         }
-        totalPrice.text = String(sum)
+        totalPrice.text = String(format: "%.2f", sum)
     }
     
 }
