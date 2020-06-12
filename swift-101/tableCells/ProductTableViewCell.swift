@@ -9,10 +9,13 @@
 import UIKit
 
 class ProductTableViewCell: UITableViewCell {
+
     //MARK: Outlets
     @IBOutlet weak var amountTF: UITextField!
     @IBOutlet weak var productName: UILabel!
     @IBOutlet weak var priceTF: UITextField!
+    @IBOutlet weak var rowDelBtn: UIButton!
+    
     
     var delegate:ShoppingListDelegate?
     var index:Int?
@@ -35,9 +38,17 @@ class ProductTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+    @IBAction func delButtonClicked(_ sender: Any) {
+        if let currentIndex = index{
+            self.delegate?.deleteRow(rowIndex: currentIndex)
+        }
+        
+    }
     
 }
+
+//MARK:TextFields
+//---------- Text Field Return Key Actions ---------------
 
 extension ProductTableViewCell: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -53,8 +64,8 @@ extension ProductTableViewCell: UITextFieldDelegate{
         }
         return true
     }
+    
+    
 }
 
-protocol EditClickedDelegate{
-    func onClick()
-}
+

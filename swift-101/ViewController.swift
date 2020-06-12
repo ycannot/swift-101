@@ -8,14 +8,39 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShoppingListDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ShoppingListDelegate, NewItemDelegate {
     
     
     var products = [Product]()
     let cellId = "ProductTableViewCell"
+    var isEditModeEnabled = false
+    
     // MARK: Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var totalPrice: UILabel!
+    
+    @IBAction func addClickedAction(_ sender: Any) {
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "addItemVC") as! AddItemViewController
+        next.delegate = self
+        self.present(next, animated: true, completion: nil)
+    }
+    @IBAction func editClickedAction(_ sender: UIBarButtonItem) {
+        for i in 0...tableView.numberOfSections-1{
+            for j in 0...tableView.numberOfRows(inSection: i)-1{
+                let cell = tableView.cellForRow(at: NSIndexPath(row: j, section: i) as IndexPath) as! ProductTableViewCell
+                if isEditModeEnabled {
+                    cell.rowDelBtn.isHidden = true
+                    
+                }
+                else{
+                    cell.rowDelBtn.isHidden = false
+                    
+                }
+            }
+        }
+        isEditModeEnabled = !isEditModeEnabled
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,17 +49,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.rowHeight = UITableView.automaticDimension
         tableView.delegate = self
         tableView.dataSource = self
+        calculateSum(productList: products)
         
-        var sum:Double = 0
-        for _ in 1...8{
-            let element = Product(name: "palanga", price: 19.99, amount: 2)!
-            products.append(element)
-            sum += (Double(element.amount) * element.price)
-            
-        }
-        totalPrice.text = String(format: "%.2f", sum)
-        tableView.reloadData()
     }
+    
+    func calculateSum(productList:[Product]){
+        var sum:Double = 0
+        for i in productList{
+            sum += (Double(i.amount) * i.price)
+        }
+        self.totalPrice.text = String(format: "%.2f", sum)
+    }
+    
+    //MARK: Protocol Functions
+    
+    //---------- UITableViewDelegate & UITableViewDataSource implementation functions ---------------
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return products.count
@@ -56,9 +85,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 1
     }
     
+    //---------- ShoppingListDelegate protocol implementation functions -------------
+    
     func recalculate(rowIndex:Int, amount:Int, price:Double) {
-        //tableView.reloadData()
-        //print("table has been reloaded")
         products[rowIndex].amount = amount
         products[rowIndex].price = price
         var sum:Double = 0
@@ -67,10 +96,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         totalPrice.text = String(format: "%.2f", sum)
     }
+    func deleteRow(rowIndex: Int) {
+        products.remove(at: rowIndex)
+        UIView.transition(with: tableView, duration: 0.5, options: .transitionCrossDissolve, animations: {self.tableView.reloadData()}, completion: nil)
+        calculateSum(productList: products)
+    }
+    
+    //---------- NewItemDelegate protocol implementation functions ------------------
+    
+    func addItem(newItem:Product) {
+        products.append(newItem)
+        UIView.transition(with: tableView, duration: 0.5, options: .transitionCrossDissolve, animations: {self.tableView.reloadData()}, completion: nil)
+        calculateSum(productList: products)
+    }
+    
+    
+    
     
 }
 
+//MARK: Protocols
+//----------- Protocols --------------
+
 protocol ShoppingListDelegate {
     func recalculate(rowIndex:Int, amount:Int, price:Double)
+    func deleteRow(rowIndex:Int)
+}
+
+protocol NewItemDelegate {
+    func addItem(newItem:Product)
 }
 

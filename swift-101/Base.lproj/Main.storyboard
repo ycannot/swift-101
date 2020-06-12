@@ -23,8 +23,16 @@
                                 <items>
                                     <navigationItem title="Alışveriş Listesi" id="V2o-1f-srl">
                                         <rightBarButtonItems>
-                                            <barButtonItem systemItem="edit" id="Rof-y9-z03"/>
-                                            <barButtonItem systemItem="add" id="bRQ-YN-Xth"/>
+                                            <barButtonItem systemItem="edit" id="Rof-y9-z03">
+                                                <connections>
+                                                    <action selector="editClickedAction:" destination="BYZ-38-t0r" id="FtZ-kO-3WG"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem systemItem="add" id="bRQ-YN-Xth">
+                                                <connections>
+                                                    <action selector="addClickedAction:" destination="BYZ-38-t0r" id="gGc-3b-e8x"/>
+                                                </connections>
+                                            </barButtonItem>
                                         </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
@@ -96,11 +104,106 @@
                     <connections>
                         <outlet property="tableView" destination="o3Q-sU-14D" id="PqJ-Xi-ufc"/>
                         <outlet property="totalPrice" destination="yuQ-gq-a3x" id="X7b-Xf-8a4"/>
+                        <segue destination="fl6-cL-qYl" kind="custom" id="8Zn-yE-pBD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="124"/>
+            <point key="canvasLocation" x="143" y="124"/>
+        </scene>
+        <!--Add Item View Controller-->
+        <scene sceneID="qUw-17-6iC">
+            <objects>
+                <viewController storyboardIdentifier="addItemVC" id="fl6-cL-qYl" customClass="AddItemViewController" customModule="swift_101" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tVh-kg-vsi">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0OD-LF-e2w">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <navigationItem title="Ekle" id="EMB-ph-xZY">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="hN7-v1-NX2">
+                                            <connections>
+                                                <action selector="doneAction:" destination="fl6-cL-qYl" id="VsS-2j-CZ6"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6oz-hG-JT6">
+                                <rect key="frame" x="157" y="306" width="100" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="iRl-ag-Dej"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adet:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCq-8q-TGv">
+                                <rect key="frame" x="186.5" y="265" width="41" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zfe-8B-38i">
+                                <rect key="frame" x="107" y="431" width="200" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="iAp-IR-ebk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ürün Adı:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mph-Zj-IzV">
+                                <rect key="frame" x="171.5" y="390" width="71" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fiyat:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUd-yE-Vv7">
+                                <rect key="frame" x="186" y="515" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hnu-mF-AhI">
+                                <rect key="frame" x="157" y="556" width="100" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="2zA-fz-PS7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="0OD-LF-e2w" firstAttribute="leading" secondItem="tVh-kg-vsi" secondAttribute="leading" id="1sR-jv-u4C"/>
+                            <constraint firstItem="zfe-8B-38i" firstAttribute="centerX" secondItem="tVh-kg-vsi" secondAttribute="centerX" id="382-i1-rAv"/>
+                            <constraint firstAttribute="trailing" secondItem="0OD-LF-e2w" secondAttribute="trailing" id="5xo-OY-JIl"/>
+                            <constraint firstItem="6oz-hG-JT6" firstAttribute="top" secondItem="ZCq-8q-TGv" secondAttribute="bottom" constant="20" id="7D8-xi-yGu"/>
+                            <constraint firstItem="hnu-mF-AhI" firstAttribute="top" secondItem="mUd-yE-Vv7" secondAttribute="bottom" constant="20" id="LFD-Ju-oMM"/>
+                            <constraint firstItem="0OD-LF-e2w" firstAttribute="top" secondItem="tVh-kg-vsi" secondAttribute="top" id="P3m-Gh-FKI"/>
+                            <constraint firstItem="Mph-Zj-IzV" firstAttribute="top" secondItem="6oz-hG-JT6" secondAttribute="bottom" constant="50" id="SZi-H6-5jJ"/>
+                            <constraint firstItem="6oz-hG-JT6" firstAttribute="centerX" secondItem="tVh-kg-vsi" secondAttribute="centerX" id="V2G-fy-5an"/>
+                            <constraint firstItem="ZCq-8q-TGv" firstAttribute="centerX" secondItem="tVh-kg-vsi" secondAttribute="centerX" id="ZeX-Xp-sIp"/>
+                            <constraint firstItem="zfe-8B-38i" firstAttribute="top" secondItem="Mph-Zj-IzV" secondAttribute="bottom" constant="20" id="cQF-Qw-VQb"/>
+                            <constraint firstItem="mUd-yE-Vv7" firstAttribute="centerX" secondItem="tVh-kg-vsi" secondAttribute="centerX" id="ebp-po-3jH"/>
+                            <constraint firstItem="Mph-Zj-IzV" firstAttribute="centerX" secondItem="tVh-kg-vsi" secondAttribute="centerX" id="fbw-PZ-3yJ"/>
+                            <constraint firstItem="zfe-8B-38i" firstAttribute="centerY" secondItem="tVh-kg-vsi" secondAttribute="centerY" id="otH-HD-oTY"/>
+                            <constraint firstItem="mUd-yE-Vv7" firstAttribute="top" secondItem="zfe-8B-38i" secondAttribute="bottom" constant="50" id="uzd-Ea-RXr"/>
+                            <constraint firstItem="hnu-mF-AhI" firstAttribute="centerX" secondItem="tVh-kg-vsi" secondAttribute="centerX" id="yHI-ss-e9O"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zGP-DZ-a41"/>
+                    </view>
+                    <connections>
+                        <outlet property="amountTF" destination="6oz-hG-JT6" id="R94-rM-HKL"/>
+                        <outlet property="priceTF" destination="hnu-mF-AhI" id="gft-1e-d8X"/>
+                        <outlet property="productNameTF" destination="zfe-8B-38i" id="7Ww-F4-Kls"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UvC-ic-QUf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="930" y="124"/>
         </scene>
     </scenes>
 </document>
